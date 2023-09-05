@@ -1,0 +1,39 @@
+//Implementation Blocks
+
+struct Retângulo {
+    largura: u32,
+    altura: u32,
+}
+
+impl Retângulo {
+    // Método associado que cria uma nova instância de Retângulo
+    fn novo(largura: u32, altura: u32) -> Retângulo {
+        Retângulo { largura, altura }
+    }
+
+    // Método que calcula a área do retângulo
+    fn calcular_area(&self) -> u32 {
+        self.largura * self.altura
+    }
+}
+
+fn main() {
+    let retangulo = Retângulo::novo(10, 20);
+    let área = retangulo.calcular_area();
+
+    println!("Área do retângulo: {}", área);
+}
+
+
+/*Neste exemplo, definimos uma struct chamada Retângulo para representar retângulos. Em seguida, 
+usamos um bloco impl para associar métodos a essa estrutura:
+
+    novo é um método associado que cria uma nova instância de Retângulo.
+    calcular_area é um método que calcula a área do retângulo.
+
+Dentro do bloco impl, você pode definir funções e métodos que operam no tipo de dados em questão. Os
+ métodos podem ser chamados em instâncias do tipo de dados usando a notação de ponto.
+
+Os blocos impl são uma parte fundamental da programação em Rust e são usados para adicionar comportamento
+ personalizado a tipos de dados, tornando-os mais flexíveis e reutilizáveis. Eles são usados não apenas 
+ com estruturas, mas também com enums, traits e outros tipos de dados personalizados em Rust. */
