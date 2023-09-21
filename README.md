@@ -3,4 +3,4 @@
 ## EM ANDAMENTO
 
 ### 1- Pasta pra fazer testes
-### 2-  Api feito por framework actix-web(funciona somento no windows)
+### 2-  Api feito por framework actix-web(funciona somente no VsCode do windows)
