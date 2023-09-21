@@ -2,27 +2,9 @@
 
 
 
-use std::io;
-use std::io::Error;
-
-//mod calculator;
-struct Pessoa{
-    nome:String,
-    idade: u32,
-
-}
 fn main() {
     // Criando uma Option que contém um valor inteiro
-    let some_number: Option<i32> = Some(42);
-
-    // Criando uma Option que não contém um valor
-    let no_number: Option<i32> = None;
-
-    // Usando match para lidar com Option
-    match some_number {
-        Some(value) => println!("Valor existente: {}", value),
-        None => println!("Nenhum valor."),
-    }
+   println!("aaa");
 
    
 }
