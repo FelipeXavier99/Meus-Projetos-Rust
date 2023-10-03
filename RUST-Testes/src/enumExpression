@@ -1,0 +1,81 @@
+enum Expression {
+    Val(i32),
+    Add(Box<Expression>, Box<Expression>),
+    Sub(Box<Expression>, Box<Expression>),
+    Mul(Box<Expression>, Box<Expression>),
+    Div(Box<Expression>, Box<Expression>),
+}
+use {Expression::Add, Expression::Div, Expression::Mul, Expression::Sub, Expression::Val};
+impl Expression {
+    fn evaluate(&self) -> Result<i32, String> {
+        match self {
+            Val(val) => Ok(*val),
+            Add(exp1, exp2) => {
+                let val1 = exp1.evaluate()?;
+                let val2 = exp2.evaluate()?;
+                Ok(val1 + val2)
+            }
+            Sub(exp1, exp2) => {
+                let val1 = exp1.evaluate()?;
+                let val2 = exp2.evaluate()?;
+                Ok(val1 - val2)
+            }
+            Mul(exp1, exp2) => {
+                let val1 = exp1.evaluate()?;
+                let val2 = exp2.evaluate()?;
+                Ok(val1 * val2)
+            }
+            Div(exp1, exp2) => {
+                let val1 = exp1.evaluate()?;
+                let val2 = exp2.evaluate()?;
+                if val2 == 0 {
+                    return Err("Can not divide by zero".to_string());
+                }
+                Ok(val1 / val2)
+            }
+        }
+    }
+    fn to_boxed(self) -> Box<Self> {
+        Box::new(self)
+    }
+}
+
+fn main() {
+    // calculate: 2 + 3 * 4
+    let exp = Add(
+        Val(2).to_boxed(),
+        Mul(Val(3).to_boxed(), Val(4).to_boxed()).to_boxed(),
+    );
+    match exp.evaluate() {
+        Ok(res) => println!("Expression evaluated to: {res}"),
+        Err(error) => println!("Error: {error}"),
+    }
+}
+
+/*
+Esse código Rust define uma enumeração Expression que representa uma árvore de expressões matemáticas e permite avaliá-las para obter um resultado. Aqui está uma explicação passo a passo do código:
+
+    A enumeração Expression é definida com os seguintes variantes:
+        Val(i32): Representa um valor inteiro.
+        Add(Box<Expression>, Box<Expression>): Representa uma adição entre duas expressões.
+        Sub(Box<Expression>, Box<Expression>): Representa uma subtração entre duas expressões.
+        Mul(Box<Expression>, Box<Expression>): Representa uma multiplicação entre duas expressões.
+        Div(Box<Expression>, Box<Expression>): Representa uma divisão entre duas expressões.
+
+    Em seguida, o código usa uma diretiva use para importar as variantes da enumeração Expression que serão usadas posteriormente no código.
+
+    Dentro da implementação (impl) da enumeração Expression, existe uma função chamada evaluate. Esta função é usada para avaliar a expressão e retorna um resultado de tipo Result<i32, String>. Ela é implementada com um padrão match para lidar com diferentes variantes de expressões.
+        Para Val, ela simplesmente extrai o valor inteiro e o retorna como um Ok.
+        Para operações como adição, subtração, multiplicação e divisão, ela avalia as expressões contidas em exp1 e exp2 recursivamente, em seguida, executa a operação apropriada e retorna o resultado como Ok.
+        Se ocorrer uma divisão por zero, ela retorna um Err com uma mensagem de erro.
+
+    A função to_boxed é implementada para converter uma instância de Expression em um ponteiro Box<Expression>. Isso é útil para armazenar as expressões em uma estrutura de dados com alocação dinâmica.
+
+    No fn main(), uma expressão é construída para calcular "2 + 3 * 4" usando a enumeração Expression. A árvore de expressão é construída usando as variantes da enumeração e os métodos to_boxed para converter as expressões em Box<Expression>.
+
+    A expressão é então avaliada usando o método evaluate e o resultado é correspondido (match) para imprimir o resultado ou uma mensagem de erro.
+
+A saída esperada para este código seria "Expression evaluated to: 14", porque 2 + (3 * 4) é igual a 14. Note que a mensagem de erro nunca deve ser impressa neste exemplo, a menos que você intencionalmente divida por zero.
+
+
+/*
