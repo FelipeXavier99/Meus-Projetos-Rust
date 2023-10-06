@@ -45,3 +45,26 @@ Rust fornece mecanismos como mutexes e canais para facilitar a sincronização e
 
 
 */
+
+
+
+// exemplo 2:
+use std::thread;
+
+fn main() {
+    // Crie uma nova thread que executa a função anônima
+    let handle = thread::spawn(|| {
+        for i in 1..=5 {
+            println!("Thread: {}", i);
+        }
+    });
+
+    // Aguarde a thread terminar
+    handle.join().unwrap();
+
+    // Thread principal continua a execução
+    for i in 6..=10 {
+        println!("Main Thread: {}", i);
+    }
+}
+
