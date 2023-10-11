@@ -10,7 +10,7 @@ macro_rules! say_hello {
 }
 
 fn main() {
-    say_hello!(); // Chama a macro para gerar código.
+    say_hello!(); // Chama a macro para gerar código. **DETALHE Q TEM Q TER (!)
 }
 
 
