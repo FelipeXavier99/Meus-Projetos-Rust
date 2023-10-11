@@ -1,0 +1,54 @@
+// send
+/*
+Neste exemplo, um vetor data é movido para a thread criada usando thread::spawn,
+pois o tipo Vec implementa o trait Send. Portanto, é seguro mover o vetor para a nova thread.
+*/
+
+
+use std::thread;
+
+fn main() {
+    let data = vec![1, 2, 3];
+    
+    // O tipo Vec implementa o trait Send, é seguro para ser movido entre threads.
+    let handle = thread::spawn(move || {
+        for &num in &data {
+            println!("Thread: {}", num);
+        }
+    });
+
+    handle.join().unwrap();
+}
+
+//-----------------------------------------------
+
+//Sync
+/*
+usamos um tipo Mutex dentro de um tipo Arc (Atomic Reference Counter), e ambos implementam o trait Send e Sync. 
+Isso permite que vários threads acessem e modifiquem o valor de maneira segura e concorrente.
+*/
+use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let data = Arc::new(Mutex::new(0));
+
+    let handles: Vec<_> = (0..5)
+        .map(|_| {
+            let data = Arc::clone(&data);
+            thread::spawn(move || {
+                let mut data = data.lock().unwrap();
+                *data += 1;
+            })
+        })
+        .collect();
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    let final_data = data.lock().unwrap();
+    println!("Final Data: {}", *final_data);
+}
+
+
