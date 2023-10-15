@@ -1,1 +1,37 @@
+ aqui está um exemplo de como o Rbac pode ser usado em Rust para controlar o acesso a recursos baseados na função do usuário:
+
+use utoipa::policy::Policy;
+use utoipa::role::Role;
+use utoipa::user::User;
+
+fn main() {
+    // Criar duas funções: "Administrador" e "Usuário"
+    let admin_role = Role::new("Administrador");
+    let user_role = Role::new("Usuário");
+
+    // Criar dois usuários: "admin" e "user"
+    let admin_user = User::new("admin", "admin");
+    let user_user = User::new("user", "user");
+
+    // Associar as funções aos usuários
+    admin_user.add_role(admin_role);
+    user_user.add_role(user_role);
+
+    // Criar uma política que permite que usuários com a função "Administrador" criem, editem e excluam recursos
+    let policy = Policy::new();
+    policy.allow_function(admin_role, "create");
+    policy.allow_function(admin_role, "edit");
+    policy.allow_function(admin_role, "delete");
+
+    // Verificar se o usuário "admin" pode criar um recurso
+    assert!(policy.check_permission(admin_user, "create"));
+
+    // Verificar se o usuário "user" pode criar um recurso
+    assert!(!policy.check_permission(user_user, "create"));
+}
+
+
+
+----------------------------
+
 
