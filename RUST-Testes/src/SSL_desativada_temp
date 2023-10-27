@@ -1,0 +1,46 @@
+/    // Exempplo com a verificação SSL desativada temporariamente em um ENDPOINT POST
+
+
+//    use actix_web::{web, HttpResponse, Result, error};
+//    use reqwest;
+//    // um atix_web::Error personalizado para erros do reqwest
+//    #[derive(Debug)]
+//    struct ReqwestError {
+//        source: reqwest::Error,
+//    }
+
+//    impl std::fmt::Display for ReqwestError {
+//        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+//            write!(f, "Reqwest error: {}", self.source)
+//        }
+//    }
+
+//    impl error::ResponseError for ReqwestError {}
+
+//    impl From<reqwest::Error> for ReqwestError {
+//        fn from(err: reqwest::Error) -> Self {
+//            ReqwestError { source: err }
+//        }
+//    }
+
+//    #[post("/login_cliente")]
+//    pub async fn form_login_cliente(form: web::Form<FormLoginCliente>) -> Result<HttpResponse> {
+//        let req_client = reqwest::Client::new();
+//        let url = "site pra testar API";
+
+//        let params = [("email", &form.email), ("senha", &form.senha)];
+
+//        // Use a função convert_reqwest_error para tratar o reqwest::Error
+//        let response = req_client
+//            .post(url)
+//            .form(&params)
+//            .send()
+//            .await
+//            .map_err(|err| ReqwestError::from(err))?;
+
+//        let response_text = response.text().await.unwrap();
+//        println!("{}", response_text);
+
+//        // Responda ao cliente com a resposta da solicitação HTTP
+//        Ok(HttpResponse::Ok().body(response_text))
+//    }
