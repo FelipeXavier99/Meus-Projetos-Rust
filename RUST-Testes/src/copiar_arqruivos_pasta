@@ -4,8 +4,8 @@ use std::fs::{self, copy};
 use walkdir::WalkDir;
 
 fn main() {
-    let dir_to_search = "/storage/nvr/36/70/2024/01/05";  
-    let target_dir = "/opt/sentric/alpha/static";  
+    let dir_to_search = "botar caminho origem";  
+    let target_dir = "botar caminho destino";  
 
     for entry in WalkDir::new(dir_to_search).into_iter().filter_map(|e| e.ok()) {
         if entry.file_type().is_file() {
