@@ -1,0 +1,30 @@
+// script main pra copiar em uma pasta para outra
+
+use std::fs::{self, copy};
+use walkdir::WalkDir;
+
+fn main() {
+    let dir_to_search = "/storage/nvr/36/70/2024/01/05";  
+    let target_dir = "/opt/sentric/alpha/static";  
+
+    for entry in WalkDir::new(dir_to_search).into_iter().filter_map(|e| e.ok()) {
+        if entry.file_type().is_file() {
+            let file_name = entry.file_name().to_string_lossy();
+            // Adicione suas condições de pesquisa aqui, por exemplo, usando expressões regulares
+            if file_name.contains("mp4") {
+                let source_path = entry.path();
+                let target_path = format!("{}/{}", target_dir, file_name);
+                
+                match copy(source_path, &target_path) {
+                    Ok(_) => {
+                        println!("Arquivo copiado para: {}", target_path);
+                        break;  // Sair do loop após copiar o primeiro arquivo
+                    }
+                    Err(e) => {
+                        eprintln!("Erro ao copiar o arquivo para {}: {}", target_path, e);
+                    }
+                }
+            }
+        }
+    }
+}
