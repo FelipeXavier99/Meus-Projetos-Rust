@@ -1,0 +1,45 @@
+// Script main converter para MP4 via ffmpeg
+
+use std::process::Command;
+use walkdir::WalkDir;
+
+fn main() {
+    let dir_to_search = "caminho origem";
+    let target_dir = "caminho destino";
+
+    for entry in WalkDir::new(dir_to_search).into_iter().filter_map(|e| e.ok()) {
+        if entry.file_type().is_file() {
+            let file_name = entry.file_name().to_string_lossy();
+            // Adicione suas condições de pesquisa aqui, por exemplo, usando expressões regulares
+            if file_name.contains(".mkv") {
+                let source_path = entry.path();
+                let target_path = format!("{}/{}.mp4", target_dir, file_name.replace(".mkv", ""));
+
+                // Chamada do ffmpeg para converter MKV para MP4
+                let ffmpeg_result = Command::new("ffmpeg")
+                    .args(&["-i", source_path.to_str().unwrap(), &target_path])
+                    .output();
+
+                match ffmpeg_result {
+                    Ok(output) if output.status.success() => {
+                        println!("Arquivo convertido para: {}", target_path);
+                    }
+                    Ok(output) => {
+                        eprintln!(
+                            "Erro ao converter o arquivo {}: {}",
+                            source_path.display(),
+                            String::from_utf8_lossy(&output.stderr)
+                        );
+                    }
+                    Err(e) => {
+                        eprintln!(
+                            "Erro ao executar o ffmpeg para o arquivo {}: {}",
+                            source_path.display(),
+                            e
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
