@@ -1,0 +1,9 @@
+[package]
+name = "actix_minijinja_project"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+minijinja = { version = "0.22", features = ["source"] }
+tokio = { version = "1", features = ["full"] }
