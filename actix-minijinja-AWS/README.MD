@@ -10,7 +10,11 @@ da pasta /etc/nginx/nginx.conf na porta 80
 OBS2: Caso queira criar projeto do zero: cargo new actix_minijinja_project --bin
 
 
-```nginx server { listen 80; listen [::]:80; server_name 3.84.37.42;
+```
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  3...; AQUI BOTAR IP AWS
 -Configurando o proxy reverso para o Actix Web
 location / {
     proxy_pass http://127.0.0.1:8080;  # Porta onde o Actix Web está rodando
