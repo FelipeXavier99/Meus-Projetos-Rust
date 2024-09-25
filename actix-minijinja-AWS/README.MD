@@ -1,4 +1,4 @@
-Projeto simples com actix e minjinja e rodando dentro do servidor EC2 da AWS
+#Projeto simples com actix e minjinja e rodando dentro do servidor EC2 da AWS
 
 comandos:
 - cargo build --release
@@ -9,6 +9,7 @@ da pasta /etc/nginx/nginx.conf na porta 80
 
 OBS2: Caso queira criar projeto do zero: cargo new actix_minijinja_project --bin
 
+###Abaixo config nginx reverso para AWS
 
 ```
 server {
