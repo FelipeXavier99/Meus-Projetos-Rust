@@ -1,4 +1,4 @@
-Pra saber sem começa com letra ou umero numa STRING
+//Pra saber sem começa com letra ou umero numa STRING
 
 fn main() {
     let minha_string = "123abc";
@@ -17,3 +17,20 @@ fn main() {
         println!("A string não começa com uma letra");
     }
 }
+
+
+// e se termina com letra ou número:
+
+fn main() {
+    let s = "foo";
+    let compactar = format!("{}1",s);
+   
+    if s.ends_with(|c: char| c.is_numeric()) {
+    
+        println!("A string termina com um número!")
+    } else {
+    
+        println!("A string NÃO termina com um número. {}",compactar)
+    }
+}
+   
