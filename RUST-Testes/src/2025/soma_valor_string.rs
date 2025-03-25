@@ -1,6 +1,8 @@
 // Soma um valor quando tem numeros no final da String 
 //Exemplo: "foobar001"; Esperado: "foobar002"
 
+//codewars.com
+
 fn substituir_ultimo_numero(s: &str) -> String {
     // Pega os últimos números da string incluindo zeros à esquerda
     let numeros = s.chars()
